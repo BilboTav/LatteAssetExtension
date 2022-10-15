@@ -1,0 +1,21 @@
+{
+    "name": "bilbofox/latte-asset-extension",
+    "type": "library",
+    "description": "Extension for Latte v3 adding n:asset macro for simplification of asset render in Latte",
+    "authors": [
+        {
+            "name": "Michal Kvita",
+            "email": "Mikvt@seznam.cz",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.0",
+        "latte/latte": "^3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bilbofox\\Latte\\": "src/"
+        }
+    }
+}
