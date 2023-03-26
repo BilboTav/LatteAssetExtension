@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Bilbofox\Latte\Nodes;
 
+use Generator;
 use Latte\CompileException;
 use Latte\Compiler\Nodes\Html\AttributeNode;
 use Latte\Compiler\Nodes\Html\ElementNode;
@@ -55,20 +56,24 @@ class AssetNode extends StatementNode
         // Check valid tag use...
         $tagName = $tag->htmlElement->name;
         if (!isset(self::$validTags[$tagName])) {
-            throw new CompileException(sprintf('Invalid usage on tag <%s> - n:asset macro can be used only on tags %s',
-                                    $tagName,
-                                    implode(',', array_map(fn($tag) => '<' . $tag . '>', array_keys(self::$validTags)))
-                            ), $tag->position);
+            throw new CompileException(
+                sprintf('Invalid usage on tag <%s> - n:asset macro can be used only on tags %s',
+                    $tagName,
+                    implode(',', array_map(fn($tag) => '<' . $tag . '>', array_keys(self::$validTags)))
+                ), $tag->position
+            );
         }
         $node->tagName = $tagName;
 
         // Check existing attributes...
         $usedAttrs = self::findUsedAttrs($tag->htmlElement);
         if (isset($usedAttrs[self::$validTags[$tagName]])) {
-            throw new CompileException(sprintf('Tag <%s> already has main location attribute %s="", can not be used together with n:asset macro',
-                                    $tagName,
-                                    self::$validTags[$tagName]
-                            ), $tag->position);
+            throw new CompileException(
+                sprintf('Tag <%s> already has main location attribute %s="", can not be used together with n:asset macro',
+                    $tagName,
+                    self::$validTags[$tagName]
+                ), $tag->position
+            );
         }
         $node->usedAttrs = $usedAttrs;
 
@@ -102,7 +107,8 @@ class AssetNode extends StatementNode
 
         $urlAttr = self::$validTags[$tagName];
 
-        $pathFormatted = htmlspecialchars((!str_starts_with($path, '/') ? $basePath . '/' : '') . $formatter($path), ENT_QUOTES);
+        $pathFormatted = htmlspecialchars((!str_starts_with($path, '/') ? $basePath . '/' : '') . $formatter($path),
+            ENT_QUOTES);
         $output .= ' ' . $urlAttr . '="' . $pathFormatted . '"';
 
         return $output;
@@ -112,8 +118,16 @@ class AssetNode extends StatementNode
     {
         $basePathPass = '$this->params["basePath"] ?? ""';
         return $context->format(
-                        'echo ' . self::class . '::output(%args, %dump, %dump, ' . $basePathPass . ', $this->global->_nAssetFormatter);',
-                        [$this->value], $this->tagName, $this->usedAttrs
+            'echo ' . self::class . '::output(%args, %dump, %dump, ' . $basePathPass . ', $this->global->_nAssetFormatter);',
+            [$this->value], $this->tagName, $this->usedAttrs
         );
+    }
+
+    public function &getIterator(): Generator
+    {
+        // needs to be here - https://latte.nette.org/en/creating-extension#toc-ast-traversing
+        if (false) {
+            yield;
+        }
     }
 }
