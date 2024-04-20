@@ -35,6 +35,7 @@ class AssetNode extends StatementNode
     private static array $validTags = [
         'script' => 'src',
         'link' => 'href',
+        'img' => 'src',
     ];
 
     private static function findUsedAttrs(ElementNode $el): array

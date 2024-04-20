@@ -25,8 +25,10 @@ class AssetExtension extends Latte\Extension
 
     public function getTags(): array
     {
+        $tagHandler = fn(Tag $tag, TemplateParser $templateParser) => AssetNode::create($tag, $templateParser);
         return [
-            'n:asset' => fn(Tag $tag, TemplateParser $templateParser) => AssetNode::create($tag, $templateParser),
+            'n:asset' => $tagHandler,
+            'n:src' => $tagHandler,
         ];
     }
 
