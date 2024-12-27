@@ -50,7 +50,7 @@ class AssetNode extends StatementNode
         return $res;
     }
 
-    public static function create(Tag $tag, TemplateParser $templateParser, callable $pathFormatter = null)
+    public static function create(Tag $tag, TemplateParser $templateParser, ?callable $pathFormatter = null)
     {
         $node = new static;
 
