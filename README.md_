@@ -2,7 +2,7 @@
 
 Extension for Latte v3 adding `n:asset` macro for simplification of asset render (css/js files mainly) in Latte
 
-Using macro is simple, we just add attribute `n:asset` to commonly used HTML tags `<link>` or `<script>`.
+Using macro is simple, we just add attribute `n:asset` or `n:src` to commonly used HTML tags `<link>` or `<script>` or `<img>`.
 Macro automatically generates main argument for linking asset URL like `<script src="...">` and adds other arguments, if needed - for instance it will respect if argument `rel=""` in linking css style is present already.
 It will also prefix generated path by `{$basePath}` variable unless the linked URL is absolute.
 
