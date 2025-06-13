@@ -2,6 +2,7 @@
     "name": "bilbofox/latte-asset-extension",
     "type": "library",
     "description": "Extension for Latte v3 adding n:asset macro for simplification of asset render in Latte",
+    "license": "Unlicense",
     "authors": [
         {
             "name": "Michal Kvita",
